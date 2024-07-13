@@ -14,10 +14,6 @@ const select = '(.*)';
  * @argument $1 publicId e.g. theodorusclarence/blogs/one-stop-starter/seo-component_xpzsab
  * @argument $2 alt e.g. seo-component
  */
-const CLOUDINARY_REGEXP = new RegExp(
-  `<CloudinaryImg${dotAll}publicId=${quote}${select}${quote}${dotAll}alt=${quote}${select}${quote}${dotAll}/>`,
-  'g'
-);
 
 /**
  * @argument $1 user/reponame e.g. theodorusclarence/ts-nextjs-tailwind-starter

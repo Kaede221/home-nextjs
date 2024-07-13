@@ -27,10 +27,10 @@ export default function ProjectsPage({
         <section className={clsx(isLoaded && 'fade-in-start')}>
           <div className='layout py-12'>
             <h1 className='text-3xl md:text-5xl' data-fade='0'>
-              <Accent>Projects</Accent>
+              <Accent>项目</Accent>
             </h1>
             <p data-fade='1' className='mt-2 text-gray-600 dark:text-gray-300'>
-              Showcase of my works on frontend development.
+              我的一些项目
             </p>
 
             <ul

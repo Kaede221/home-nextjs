@@ -1,0 +1,166 @@
+---
+title: "Pixiv Tool使用方法"
+publishedAt: "2024-07-10"
+banner: "test.jpeg"
+description: "123"
+tags: "工具,开发"
+---
+
+# Pixiv Tool使用方法
+
+## 介绍
+
+这是我自己写的一个小工具, 用于爬取 Pixiv 的图像数据(但是并不储存图像), 保存为一个单独的 json 数据库, 方便调用, 作为图片 API 或者其他内容进行使用. 你可以前往我的[仓库](https://github.com/Kaede221/Pixiv-Tool)查看本项目
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-33-50.png`}
+          width={2549}
+          height={1367} />
+
+### Releases
+
+为了方便广大开发者, 我直接把按照自己的喜好制作的数据库发布出来, 发布在这里, 需要的话可以直接下载使用.
+
+不过我并不能保证里面的数据都是有效的, 毕竟作者如果删掉了作品...还有一件事, 请注意, 我的数据库为**二次元数据库**, 是的, 里面只有二次元的图片数据, 同时里面**含有 NSFW**的内容, 使用时还请多加注意.
+
+### 数据库如何使用
+
+你可以看看我的另外一个项目, [Suzumi API](https://github.com/Kaede221/Suzumi-API), 直接就是使用的这个数据库, 还麻烦自行研究, 有文档的! 本文章主要介绍如何使用**Pixiv Tool**工具, 就在这里不多赘述了.
+
+## 使用步骤
+
+### 安装
+
+呃呃, 假设你真的什么都不知道的话, 我建议你先去学习一下相关的知识(0 基础也是可以的), 这样子可能出现 BUG 自己改也会方便一些.
+
+首先直接下载源代码文件就好, 你也可以顺便使用我的数据库作为基础, 直接下载解压到项目文件夹内就好, 完成后你可以看到下面这样的目录结构:
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-40-32.png`}
+          width={677}
+          height={366} />
+
+> 上面的`venv`文件夹是虚拟环境, 你可以使用`python -m venv venv`来创建一个虚拟环境.
+
+随后, 直接按照`requirements.txt`安装依赖就好啦: `pip3 install -r requirements.txt`, 安装后就可以开始启动程序了.
+
+### 界面
+
+当前的界面比较简陋, 但是绝对够用了
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-43-37.png`}
+          width={2549}
+          height={801} />
+
+我把界面分为了两个部分, 左边用于获取数据, 右边用于修改数据.
+
+### 获取数据
+
+这里提供了两种获取方式, 一种是根据 User 进行获取, 一种是根据 Ill(图片)进行获取, 下面我会依次介绍这两种的用法.
+
+#### User
+
+这个方法是我比较推荐的一个方法, 因为数据获取的效率比较高, 获取到的内容也基本上都是不错的作品.
+
+~~首先打开魔法, 这边推荐使用日本地区~~, 随后我们直接访问[Pixiv 官网](https://www.pixiv.net/), 并且登录自己的账号.
+
+随后, 我们打开一个用户的主页, 你可以看到下面这样的页面:
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-50-30.png`}
+          width={2549}
+          height={1367} />
+
+往下滑就好, 可以看到一个按钮: **查看全部**, 这里先别按, 先打开开发者人员工具, 再点击按钮即可
+
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-51-33.png`}
+          width={1187}
+          height={1457} />
+
+随后, 我们再网络界面, 搜素`ill`, 并且筛选`XHR`, 你应该可以得到下面这样的内容:
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-53-08.png`}
+          width={471}
+          height={441} />
+
+我们需要的是一个`user`, 你可以点击其中一个查看链接, 有 user 的就是我们需要的啦
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-53-42.png`}
+          width={798}
+          height={149} />
+
+右键点击条目, 复制链接, 填入程序的输入框内就可以了!
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-54-51.png`}
+          width={1266}
+          height={746} />
+
+#### Ill
+
+这个东西我其实不是很推荐了, 虽然原理也是差不多的.
+
+正常, 我们这次打开的是一个图片的页面, 比如下面这样子, 然后同理, 你可以找到一个 ill 的条目, 直接复制链接填入, 开始获取就好啦
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_21-58-32.png`}
+          width={2560}
+          height={1187} />
+
+> 可能会失败, 所以我更建议使用 User 获取
+
+### 处理数据
+
+#### 合并文件
+
+目前最长用的就是合并文件了, 因为你获取完成后, 可以得到一个个的分离文件, 手动合并还是太慢了, 所以我写了这样一个功能
+
+注意, 此功能需要两个主要的文件, 也就是我发布的那两个文件.
+
+> 如果你在没有**pids**文件的情况下, 开始合并文件, 并且**data.json**非空, 你的数据将被**清除**.
+>
+> 因为合并文件, 为了优化合并速度, 使用 pids 来判断数据库中是否存在某个图片的数据, 存在的话就不会添加. 如果你的 data 非空, 但是 pids 文件为空或者没有内容, 那么程序会判定为你的数据库没有文件, 随后写入其他的数据到 data 文件中, 覆盖原先的数据库!
+>
+> 总而言之, **时刻备份**!!!
+
+在确认没有问题后, 就可以开始合并文件了! 直接点击合并文件即可:
+
+<NextImage
+          className="pointer-events-none overflow-hidden rounded-t-md"
+          alt=""
+          src={`/blog/Snipaste_2024-07-10_22-05-54.png`}
+          width={1266}
+          height={584} />
+
+合并后, 会告诉你新增了多少个数据. _善用本功能, 可以判断是否添加过某一作者的图片数据_
+
+## 结尾
+
+然后本程序的介绍就结束哩, 使用起来很简单吧?
+
+我会不定时更新数据库, 每次有重大更新的时候都会在 Release 更新; 同时我会对数据进行清洗, 想办法删掉那些已经失效的数据.
+
+最后, 希望你生活愉快~, 感谢使用!

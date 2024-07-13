@@ -4,9 +4,7 @@ import { IoLogoVercel } from 'react-icons/io5';
 import {
   SiNextdotjs,
   SiNodedotjs,
-  SiReact,
-  SiTailwindcss,
-  SiTypescript,
+  SiReact
 } from 'react-icons/si';
 
 import CustomLink from '@/components/links/CustomLink';
@@ -37,9 +35,7 @@ const stacks = [
     icon: SiNextdotjs,
     tooltip: (
       <>
-        <CustomLink href='https://nextjs.org'>Next.js</CustomLink>, currently my
-        go-to framework because of the static generation, dynamic paths, and
-        built-in api.
+        <CustomLink href='https://nextjs.org'>Next.js</CustomLink>, 目前正在研究的一个前端框架, 使用起来非常简单, 最主要的是可以直接部署在Vercel上面
       </>
     ),
   },
@@ -48,40 +44,8 @@ const stacks = [
     icon: SiReact,
     tooltip: (
       <>
-        <CustomLink href='https://reactjs.org/'>Create React App</CustomLink>,
-        first frontend framework that I learned, great if you are making an
-        authenticated website.
-      </>
-    ),
-  },
-  {
-    id: 'typescript',
-    icon: SiTypescript,
-    tooltip: (
-      <>
-        <CustomLink href='https://www.typescriptlang.org/'>
-          TypeScript
-        </CustomLink>
-        , finally jumping on this one, I love the experience! Check out my{' '}
-        <CustomLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-          starter template
-        </CustomLink>{' '}
-        using Next.js, Tailwind CSS, and TypeScript
-      </>
-    ),
-  },
-  {
-    id: 'tailwind',
-    icon: SiTailwindcss,
-    tooltip: (
-      <>
-        <CustomLink href='https://tailwindcss.com/'>Tailwind CSS</CustomLink> is
-        awesome, I have never achieved this much reusability. Make sure you get
-        the{' '}
-        <CustomLink href='https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss'>
-          extension
-        </CustomLink>
-        .
+        <CustomLink href='https://reactjs.org/'>React</CustomLink>,
+        一个好用的框架, 可以快速地完成一些前后端的操作
       </>
     ),
   },
@@ -90,12 +54,8 @@ const stacks = [
     icon: IoLogoVercel,
     tooltip: (
       <>
-        <CustomLink href='https://swr.vercel.app/'>SWR by Vercel</CustomLink>,
-        great react hooks for data fetching and caching, the{' '}
-        <CustomLink href='https://swr.vercel.app/docs/revalidation#revalidate-on-focus'>
-          revalidate on focus
-        </CustomLink>{' '}
-        is unreal. react-query is also a great alternative to this.
+        <CustomLink href='https://swr.vercel.app/'>Vercel</CustomLink>,
+        目前我最喜欢的前端部署PaaS平台
       </>
     ),
   },
@@ -104,9 +64,7 @@ const stacks = [
     icon: SiNodedotjs,
     tooltip: (
       <>
-        <CustomLink href='https://nodejs.org/'>Node.js</CustomLink>, simple
-        backend language so you don't need to learn another language. Not using
-        this too often because Next.js already has a backend built-in.
+        <CustomLink href='https://nodejs.org/'>Node.js</CustomLink>, 一切的根本!
       </>
     ),
   },

@@ -1,55 +1,33 @@
-import clsx from 'clsx';
-import { InferGetStaticPropsType } from 'next';
-import * as React from 'react';
-import { HiCalendar, HiEye } from 'react-icons/hi';
+import clsx from "clsx";
+import { InferGetStaticPropsType } from "next";
+import * as React from "react";
 
-import { getFromSessionStorage } from '@/lib/helper';
-import { getAllFilesFrontmatter } from '@/lib/mdx';
-import { getTags, sortByDate, sortDateFn } from '@/lib/mdx-client';
-import useInjectContentMeta from '@/hooks/useInjectContentMeta';
-import useLoaded from '@/hooks/useLoaded';
+import { getAllFilesFrontmatter } from "@/lib/mdx";
+import { getTags, sortByDate, sortDateFn } from "@/lib/mdx-client";
+import useInjectContentMeta from "@/hooks/useInjectContentMeta";
+import useLoaded from "@/hooks/useLoaded";
 
-import Accent from '@/components/Accent';
-import Button from '@/components/buttons/Button';
-import BlogCard from '@/components/content/blog/BlogCard';
-import SubscribeCard from '@/components/content/blog/SubscribeCard';
-import ContentPlaceholder from '@/components/content/ContentPlaceholder';
-import Tag, { SkipNavTag } from '@/components/content/Tag';
-import StyledInput from '@/components/form/StyledInput';
-import Layout from '@/components/layout/Layout';
-import Seo from '@/components/Seo';
-import SortListbox, { SortOption } from '@/components/SortListbox';
+import Accent from "@/components/Accent";
+import BlogCard from "@/components/content/blog/BlogCard";
+import ContentPlaceholder from "@/components/content/ContentPlaceholder";
+import Tag, { SkipNavTag } from "@/components/content/Tag";
+import StyledInput from "@/components/form/StyledInput";
+import Layout from "@/components/layout/Layout";
+import Seo from "@/components/Seo";
 
-import { BlogFrontmatter, InjectedMeta } from '@/types/frontmatters';
-
-const sortOptions: Array<SortOption> = [
-  {
-    id: 'date',
-    name: 'Sort by date',
-    icon: HiCalendar,
-  },
-  {
-    id: 'views',
-    name: 'Sort by views',
-    icon: HiEye,
-  },
-];
+import { BlogFrontmatter, InjectedMeta } from "@/types/frontmatters";
 
 export default function IndexPage({
   posts,
   tags,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   /** Lazy init from session storage to preserve preference on revisit */
-  const [sortOrder, setSortOrder] = React.useState<SortOption>(
-    () => sortOptions[Number(getFromSessionStorage('blog-sort')) || 0]
-  );
-  const [isEnglish, setIsEnglish] = React.useState<boolean>(true);
   const isLoaded = useLoaded();
 
-  const populatedPosts = useInjectContentMeta('blog', posts);
+  const populatedPosts = useInjectContentMeta("blog", posts);
 
   //#region  //*=========== Search ===========
-  const [search, setSearch] = React.useState<string>('');
+  const [search, setSearch] = React.useState<string>("");
   const [filteredPosts, setFilteredPosts] = React.useState<
     Array<BlogFrontmatter & InjectedMeta>
   >(() => [...posts]);
@@ -57,7 +35,6 @@ export default function IndexPage({
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
-  const clearSearch = () => setSearch('');
 
   React.useEffect(() => {
     const results = populatedPosts.filter(
@@ -67,26 +44,20 @@ export default function IndexPage({
         // Check if splitted search contained in tag
         search
           .toLowerCase()
-          .split(' ')
+          .split(" ")
           .every((tag) => post.tags.includes(tag))
     );
 
-    if (sortOrder.id === 'date') {
-      results.sort(sortDateFn);
-      sessionStorage.setItem('blog-sort', '0');
-    } else if (sortOrder.id === 'views') {
-      results.sort((a, b) => (b?.views ?? 0) - (a?.views ?? 0));
-      sessionStorage.setItem('blog-sort', '1');
-    }
-
+    // 这里直接让通过日期排序就好了
+    results.sort(sortDateFn);
+    sessionStorage.setItem("blog-sort", "0");
     setFilteredPosts(results);
-  }, [search, sortOrder.id, populatedPosts]);
+  }, [search, populatedPosts]);
   //#endregion  //*======== Search ===========
 
   //#region  //*=========== Post Language Splitter ===========
-  const englishPosts = filteredPosts.filter((p) => !p.slug.startsWith('id-'));
-  const bahasaPosts = filteredPosts.filter((p) => p.slug.startsWith('id-'));
-  const currentPosts = isEnglish ? englishPosts : bahasaPosts;
+  const englishPosts = filteredPosts.filter((p) => !p.slug.startsWith("id-"));
+  const currentPosts = englishPosts;
   //#endregion  //*======== Post Language Splitter ===========
 
   //#region  //*=========== Tag ===========
@@ -95,13 +66,13 @@ export default function IndexPage({
     if (search.includes(tag)) {
       setSearch((s) =>
         s
-          .split(' ')
+          .split(" ")
           .filter((t) => t !== tag)
-          ?.join(' ')
+          ?.join(" ")
       );
     } else {
       // append tag
-      setSearch((s) => (s !== '' ? `${s.trim()} ${tag}` : tag));
+      setSearch((s) => (s !== "" ? `${s.trim()} ${tag}` : tag));
     }
   };
 
@@ -112,41 +83,37 @@ export default function IndexPage({
   const checkTagged = (tag: string) => {
     return (
       filteredTags.includes(tag) &&
-      search.toLowerCase().split(' ').includes(tag)
+      search.toLowerCase().split(" ").includes(tag)
     );
   };
   //#endregion  //*======== Tag ===========
 
   return (
     <Layout>
-      <Seo
-        templateTitle='Blog'
-        description='Thoughts, mental models, and tutorials about front-end development. Rebuild your mental model so front-end development can be predictable.'
-      />
+      <Seo templateTitle="博客" description="想法, 思考, 各种东西都汇聚于此" />
 
       <main>
-        <section className={clsx(isLoaded && 'fade-in-start')}>
-          <div className='layout py-12'>
-            <h1 className='text-3xl md:text-5xl' data-fade='0'>
-              <Accent>Blog {!isEnglish && 'Bahasa Indonesia'}</Accent>
+        <section className={clsx(isLoaded && "fade-in-start")}>
+          <div className="layout py-12">
+            <h1 className="text-3xl md:text-5xl" data-fade="0">
+              <Accent>博客</Accent>
             </h1>
-            <p className='mt-2 text-gray-600 dark:text-gray-300' data-fade='1'>
-              Thoughts, mental models, and tutorials about front-end
-              development.
+            <p className="mt-2 text-gray-600 dark:text-gray-300" data-fade="1">
+              想法与思考, 都会聚集于此
             </p>
             <StyledInput
-              data-fade='2'
-              className='mt-4'
-              placeholder='Search...'
+              data-fade="2"
+              className="mt-4"
+              placeholder="搜素..."
               onChange={handleSearch}
               value={search}
-              type='text'
+              type="text"
             />
             <div
-              className='mt-2 flex flex-wrap items-baseline justify-start gap-2 text-sm text-gray-600 dark:text-gray-300'
-              data-fade='3'
+              className="mt-2 flex flex-wrap items-baseline justify-start gap-2 text-sm text-gray-600 dark:text-gray-300"
+              data-fade="3"
             >
-              <span className='font-medium'>Choose topic:</span>
+              <span className="font-medium">选择Tag:</span>
               <SkipNavTag>
                 {tags.map((tag) => (
                   <Tag
@@ -159,28 +126,9 @@ export default function IndexPage({
                 ))}
               </SkipNavTag>
             </div>
-            <div
-              className='relative z-10 mt-6 flex flex-col items-end gap-4 text-gray-600 dark:text-gray-300 md:flex-row md:items-center md:justify-between'
-              data-fade='4'
-            >
-              <Button
-                onClick={() => {
-                  setIsEnglish((b) => !b);
-                  clearSearch();
-                }}
-                className='text-sm !font-medium'
-              >
-                Read in {isEnglish ? 'Bahasa Indonesia' : 'English'}
-              </Button>
-              <SortListbox
-                selected={sortOrder}
-                setSelected={setSortOrder}
-                options={sortOptions}
-              />
-            </div>
             <ul
-              className='mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3'
-              data-fade='5'
+              className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+              data-fade="5"
             >
               {currentPosts.length > 0 ? (
                 currentPosts.map((post) => (
@@ -194,7 +142,6 @@ export default function IndexPage({
                 <ContentPlaceholder />
               )}
             </ul>
-            <SubscribeCard className='mt-8' />
           </div>
         </section>
       </main>
@@ -203,7 +150,7 @@ export default function IndexPage({
 }
 
 export async function getStaticProps() {
-  const files = await getAllFilesFrontmatter('blog');
+  const files = await getAllFilesFrontmatter("blog");
   const posts = sortByDate(files);
 
   // Accumulate tags and remove duplicate

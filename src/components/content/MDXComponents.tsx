@@ -6,16 +6,17 @@ import GithubCard from '@/components/content/card/GithubCard';
 import CustomCode, { Pre } from '@/components/content/CustomCode';
 import SplitImage, { Split } from '@/components/content/SplitImage';
 import TweetCard from '@/components/content/TweetCard';
-import CloudinaryImg from '@/components/images/CloudinaryImg';
 import CustomLink from '@/components/links/CustomLink';
 import TechIcons from '@/components/TechIcons';
+
+import NextImage from '../images/NextImage';
 
 const MDXComponents = {
   a: CustomLink,
   Image,
   pre: Pre,
   code: CustomCode,
-  CloudinaryImg,
+  NextImage,
   LiteYouTubeEmbed,
   SplitImage,
   Split,
